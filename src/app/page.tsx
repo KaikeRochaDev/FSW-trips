@@ -8,8 +8,7 @@ export default function Home() {
   data?.user
 
   return (
-    <div>
-      Olá Mundo
+    <div className='bg-primaryDarker'>
     </div>
   )
 }
