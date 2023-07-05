@@ -3,6 +3,7 @@
 import {useSession} from 'next-auth/react'
 import TripSearch from './components/TripSearch'
 import QuickSearch from './components/QuickSearch'
+import RecommendedTrips from './components/RecommendedTrips'
 
 export default function Home() {
   const {data} = useSession()
@@ -13,6 +14,7 @@ export default function Home() {
     <div>
       <TripSearch/>
       <QuickSearch/>
+      <RecommendedTrips/>
     </div>
   )
 }
