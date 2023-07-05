@@ -1,6 +1,7 @@
 'use client'
 
 import {useSession} from 'next-auth/react'
+import TripSearch from './components/TripSearch'
 
 export default function Home() {
   const {data} = useSession()
@@ -8,7 +9,8 @@ export default function Home() {
   data?.user
 
   return (
-    <div className='bg-primaryDarker'>
+    <div>
+      <TripSearch/>
     </div>
   )
 }
