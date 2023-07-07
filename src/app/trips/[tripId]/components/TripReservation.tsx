@@ -1,12 +1,10 @@
 "use client";
-
 import Button from "@/components/Button";
 import DatePicker from "@/components/DatePicker";
 import Input from "@/components/Input";
 import { differenceInDays } from "date-fns";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
-
 interface TripReservationProps {
   tripId: string;
   tripStartDate: Date;
@@ -14,13 +12,11 @@ interface TripReservationProps {
   maxGuests: number;
   pricePerDay: number;
 }
-
 interface TripReservationForm {
   guests: number;
   startDate: Date | null;
   endDate: Date | null;
 }
-
 const TripReservation = ({ tripId, maxGuests, tripStartDate, tripEndDate, pricePerDay }: TripReservationProps) => {
   const {
     register,
@@ -28,6 +24,7 @@ const TripReservation = ({ tripId, maxGuests, tripStartDate, tripEndDate, priceP
     formState: { errors },
     control,
     watch,
+    setError,
   } = useForm<TripReservationForm>();
 
   const onSubmit = async (data: TripReservationForm) => {
@@ -45,11 +42,35 @@ const TripReservation = ({ tripId, maxGuests, tripStartDate, tripEndDate, priceP
     const res = await response.json();
 
     console.log({ res });
+    if (res?.error?.code === "TRIP_ALREADY_RESERVED") {
+      setError("startDate", {
+        type: "manual",
+        message: "Esta data já está reservada.",
+      });
+
+      setError("endDate", {
+        type: "manual",
+        message: "Esta data já está reservada.",
+      });
+    }
+
+    if (res?.error?.code === "INVALID_START_DATE") {
+      setError("startDate", {
+        type: "manual",
+        message: "Data inválida.",
+      });
+    }
+
+    if (res?.error?.code === "INVALID_END_DATE") {
+      setError("endDate", {
+        type: "manual",
+        message: "Data inválida.",
+      });
+    }
   };
 
   const startDate = watch("startDate");
   const endDate = watch("endDate");
-
   return (
     <div className="flex flex-col px-5">
       <div className="flex gap-4">
@@ -74,7 +95,6 @@ const TripReservation = ({ tripId, maxGuests, tripStartDate, tripEndDate, priceP
             />
           )}
         />
-
         <Controller
           name="endDate"
           rules={{
@@ -98,7 +118,6 @@ const TripReservation = ({ tripId, maxGuests, tripStartDate, tripEndDate, priceP
           )}
         />
       </div>
-
       <Input
         {...register("guests", {
           required: {
@@ -111,14 +130,12 @@ const TripReservation = ({ tripId, maxGuests, tripStartDate, tripEndDate, priceP
         error={!!errors?.guests}
         errorMessage={errors?.guests?.message}
       />
-
       <div className="flex justify-between mt-3">
         <p className="font-medium text-sm text-primaryDarker">Total: </p>
         <p className="font-medium text-sm text-primaryDarker">
           {startDate && endDate ? `R$${differenceInDays(endDate, startDate) * pricePerDay}` ?? 1 : "R$0"}
         </p>
       </div>
-
       <div className="pb-10 border-b border-b-grayLighter w-full">
         <Button onClick={() => handleSubmit(onSubmit)()} className="mt-3 w-full">
           Reservar agora
@@ -127,5 +144,4 @@ const TripReservation = ({ tripId, maxGuests, tripStartDate, tripEndDate, priceP
     </div>
   );
 };
-
 export default TripReservation;
