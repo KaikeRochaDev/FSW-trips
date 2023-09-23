@@ -59,6 +59,7 @@ export async function POST(request: Request) {
       },
     },
   });
+
   if (reservations.length > 0) {
     return new NextResponse(
       JSON.stringify({
@@ -69,13 +70,13 @@ export async function POST(request: Request) {
     );
   }
 
-  const totalPrice = differenceInDays(new Date(req.endDate), new Date(req.startDate)) * trip.pricePerDay.toNumber();
-
   return new NextResponse(
     JSON.stringify({
       success: true,
       trip,
-      totalPrice,
+      totalPrice:
+        differenceInDays(new Date(req.endDate), new Date(req.startDate)) *
+        Number(trip.pricePerDay),
     })
   );
 }

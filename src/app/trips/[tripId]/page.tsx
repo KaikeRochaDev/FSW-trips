@@ -29,17 +29,13 @@ const TripDetails = async ({ params }: { params: { tripId: string } }) => {
         <div className="lg:order-2">
           <TripReservation
             tripId={trip.id}
-            pricePerDay={trip.pricePerDay as any}
             tripStartDate={trip.startDate}
             tripEndDate={trip.endDate}
             maxGuests={trip.maxGuests}
+            pricePerDay={Number(trip.pricePerDay)}
           />
         </div>
-
-        <div className="lg:order-1">
-          <TripDescription description={trip.description} />
-          <TripHighlights highlights={trip.highlights} />
-        </div>
+        <TripDescription description={trip.description} />
       </div>
       <TripLocation locationDescription={trip.locationDescription} location={trip.location} />
     </div>
