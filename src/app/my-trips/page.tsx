@@ -11,9 +11,7 @@ import Button from "@/components/Button";
 
 const MyTrips = () => {
   const [reservations, setReservations] = useState<
-    Prisma.TripReservationGetPayload<{
-      include: { trip: true };
-    }>[]
+    Prisma.TripReservationGetPayload<{ include: { trip: true } }>[]
   >([]);
 
   const { status, data } = useSession();
@@ -21,45 +19,40 @@ const MyTrips = () => {
   const router = useRouter();
 
   const fetchReservations = async () => {
-    const response = await fetch(
-      `/api/user/${(data?.user as any)?.id}/reservations`
-    );
-
-    const json = await response.json();
-
-    setReservations(json);
+    const response = await fetch(`/api/user/${(data?.user as any)?.id}/trips`);
+    const res = await response.json();
+    setReservations(res);
   };
+
   useEffect(() => {
     if (status === "unauthenticated") {
       return router.push("/");
     }
-
     fetchReservations();
   }, [status]);
 
   return (
     <div className="container mx-auto p-5">
-      <h1 className="font-semibold text-primaryDarker text-xl lg:mb-5">
-        Minhas Viagens
+      <h1 className="font-semibold text-primaryDarker text-xl lg:mb-5 lg:text-2xl">
+        Minhas viagens
       </h1>
       {reservations.length > 0 ? (
         <div className="flex flex-col lg:grid lg:grid-cols-3 lg:gap-14">
-          {reservations?.map((reservation) => (
+          {reservations.map((reservation) => (
             <UserReservationItem
-              fetchReservations={fetchReservations}
               key={reservation.id}
               reservation={reservation}
+              fetchReservations={fetchReservations}
             />
           ))}
         </div>
       ) : (
-        <div className="flex flex-col lg:max-w-[500px]">
-          <p className="mt-2 font-medium text-primaryDarker">
-            Você ainda não tem nenhuma reserva! =(
+        <div className="flex flex-col lg:max-w-[600px]">
+          <p className="font-medium text-primaryDarker mt-2">
+            Você ainda não possui nenhuma reserva!
           </p>
-
           <Link href="/">
-            <Button className="w-full mt-2 lg:mt-5">Fazer reserva</Button>
+            <Button className="w-full mt-2 lg:mt-5">Fazer Reserva</Button>
           </Link>
         </div>
       )}
