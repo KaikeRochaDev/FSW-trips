@@ -1,4 +1,5 @@
 "use client";
+
 import React from "react";
 import Image from "next/image";
 import ReactCountryFlag from "react-country-flag";
@@ -42,6 +43,7 @@ const UserReservationItem = ({
 
   return (
     <div>
+      {/* CARD */}
       <div className="flex flex-col p-5 mt-5 border-grayLighter border-solid border shadow-lg rounded-lg">
         <div className="flex items-center gap-3 pb-5 border-b border-grayLighter border-solid">
           <div className="relative h-[106px] w-[124px]">

@@ -2,7 +2,7 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["fullTextSearch", "fullTextIndex"]
 }
 
@@ -15,7 +15,7 @@ model Trip {
   id                  String            @id @default(uuid())
   name                String
   location            String
-  locationDescription String            @default("Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit minima, sed sapiente laudantium asperiores dolores possimus magnam? Voluptates laborum dicta iure eveniet. Ipsam, accusamus!")
+  locationDescription String            @default("Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.")
   startDate           DateTime
   endDate             DateTime
   pricePerDay         Decimal           @db.Decimal(8, 2)
@@ -37,7 +37,7 @@ model TripReservation {
   user      User     @relation(fields: [userId], references: [id])
   startDate DateTime
   endDate   DateTime
-  guests    Int
+  guests    Int      @default(5)
   totalPaid Decimal  @db.Decimal(8, 2)
 }
 

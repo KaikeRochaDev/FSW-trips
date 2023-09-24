@@ -15,7 +15,7 @@ const TripItem = ({ trip }: TripItemProps) => {
         <div className="relative h-[280px] w-[280px]">
           <Image
             src={trip.coverImage}
-            className="rounded-lg shadow-md"
+            className="rounded-lg shadow-md "
             style={{
               objectFit: "cover",
             }}
@@ -23,7 +23,6 @@ const TripItem = ({ trip }: TripItemProps) => {
             alt={trip.name}
           />
         </div>
-
         <h3 className="text-primaryDarker font-medium text-sm mt-2">
           {trip.name}
         </h3>
@@ -31,8 +30,8 @@ const TripItem = ({ trip }: TripItemProps) => {
           <ReactCountryFlag countryCode={trip.countryCode} svg />
           <p className="text-xs text-grayPrimary">{trip.location}</p>
         </div>
-
         <p className="text-xs text-grayPrimary">
+          {" "}
           <span className="text-primary font-medium">
             R${trip.pricePerDay.toString()}
           </span>{" "}

@@ -31,6 +31,5 @@ export async function POST(request: Request) {
       },
     });
   }
-
   return new NextResponse(JSON.stringify({ received: true }), { status: 200 });
 }

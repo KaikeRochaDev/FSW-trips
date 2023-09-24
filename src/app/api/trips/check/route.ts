@@ -34,7 +34,6 @@ export async function POST(request: Request) {
     );
   }
 
-  // Data de fim recebida precisa ser menor ou igual a data de fim da viagem
   if (isBefore(new Date(trip.endDate), new Date(req.endDate))) {
     return new NextResponse(
       JSON.stringify({
